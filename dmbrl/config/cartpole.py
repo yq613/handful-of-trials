@@ -14,12 +14,12 @@ import dmbrl.env
 
 class CartpoleConfigModule:
     ENV_NAME = "MBRLCartpole-v0"
-    TASK_HORIZON = 200
-    NTRAIN_ITERS = 50
+    TASK_HORIZON = 200  #每个 Cartpole 任务的最大时间步数为 200
+    NTRAIN_ITERS = 50 # 训练迭代的数量
     NROLLOUTS_PER_ITER = 1
     PLAN_HOR = 25
     MODEL_IN, MODEL_OUT = 6, 4
-    GP_NINDUCING_POINTS = 200
+    GP_NINDUCING_POINTS = 200  #高斯过程模型使用 200 个感应点来估计模型的不确定性
 
     def __init__(self):
         self.ENV = gym.make(self.ENV_NAME)
