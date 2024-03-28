@@ -26,7 +26,7 @@ class CartpoleConfigModule:
         cfg = tf.ConfigProto()
         cfg.gpu_options.allow_growth = True
         self.SESS = tf.Session(config=cfg)
-        self.NN_TRAIN_CFG = {"epochs": 5}
+        self.NN_TRAIN_CFG = {"epochs": 5}  #训练轮数
         self.OPT_CFG = {
             "Random": {
                 "popsize": 2000
@@ -40,22 +40,22 @@ class CartpoleConfigModule:
         }
 
     @staticmethod
-    def obs_preproc(obs):
+    def obs_preproc(obs):  # 数据预处理
         if isinstance(obs, np.ndarray):
             return np.concatenate([np.sin(obs[:, 1:2]), np.cos(obs[:, 1:2]), obs[:, :1], obs[:, 2:]], axis=1)
         else:
             return tf.concat([tf.sin(obs[:, 1:2]), tf.cos(obs[:, 1:2]), obs[:, :1], obs[:, 2:]], axis=1)
 
     @staticmethod
-    def obs_postproc(obs, pred):
+    def obs_postproc(obs, pred):  #当前状态+基于此的模型预测使下一个的状态估计更准确
         return obs + pred
 
     @staticmethod
-    def targ_proc(obs, next_obs):
+    def targ_proc(obs, next_obs):  # 状态差，可能用于奖励函数
         return next_obs - obs
 
     @staticmethod
-    def obs_cost_fn(obs):
+    def obs_cost_fn(obs):   # 计算当前状态与目标位置的距离差 取反做cost
         if isinstance(obs, np.ndarray):
             return -np.exp(-np.sum(
                 np.square(CartpoleConfigModule._get_ee_pos(obs, are_tensors=False) - np.array([0.0, 0.6])), axis=1
@@ -66,7 +66,7 @@ class CartpoleConfigModule:
             ) / (0.6 ** 2))
 
     @staticmethod
-    def ac_cost_fn(acs):
+    def ac_cost_fn(acs):   # 动作cost
         if isinstance(acs, np.ndarray):
             return 0.01 * np.sum(np.square(acs), axis=1)
         else:
