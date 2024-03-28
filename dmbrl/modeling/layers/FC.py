@@ -79,7 +79,7 @@ class FC:
         """Returns the list of losses corresponding to the weight decay imposed on each weight of the
         network.
 
-        Returns: the list of weight decay losses.
+        Returns: the list of weight decay losses.权重衰减损失列表
         """
         return self.decays
 
