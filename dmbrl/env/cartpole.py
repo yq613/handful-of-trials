@@ -35,7 +35,7 @@ class CartpoleEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         qvel = self.init_qvel + np.random.normal(0, 0.1, np.shape(self.init_qvel))
         self.set_state(qpos, qvel)
         return self._get_obs()
-
+# 作用是生成服从正态分布的随机数，用于在重置模型状态时对初始关节位置和关节速度进行扰动，增加随机性
     def _get_obs(self):
         return np.concatenate([self.model.data.qpos, self.model.data.qvel]).ravel()
 
