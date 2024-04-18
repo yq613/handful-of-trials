@@ -164,9 +164,9 @@ class NN:
                                                 name="training_targets")
             train_loss = tf.reduce_sum(self._compile_losses(self.sy_train_in, self.sy_train_targ))
             train_loss += tf.add_n(self.decays)
-            self.mse_loss = self._compile_losses(self.sy_train_in, self.sy_train_targ)
+            self.mse_loss = self._compile_losses(self.sy_train_in, self.sy_train_targ)   #损失函数定义 均方误差
 
-            self.train_op = self.optimizer.minimize(train_loss, var_list=self.optvars)
+            self.train_op = self.optimizer.minimize(train_loss, var_list=self.optvars)   #梯度下降的一种方法minimize
 
         # Initialize all variables
         self.sess.run(tf.variables_initializer(self.optvars + self.nonoptvars + self.optimizer.variables()))
